@@ -49,7 +49,7 @@ const Register = () => {
             });
 
             // Send email and display name to MongoDB
-            await axios.post("http://localhost:5000/users", {
+            await axios.post("https://task-manager-web-server.vercel.app/users", {
                 email,
                 name,
             });

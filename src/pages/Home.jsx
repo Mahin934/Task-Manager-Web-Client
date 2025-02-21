@@ -25,7 +25,7 @@ const Home = () => {
 
     const fetchTasks = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/tasks");
+            const response = await axios.get("https://task-manager-web-server.vercel.app/tasks");
             const fetchedTasks = response.data || [];
             setTasks(fetchedTasks);
             updateColumns(fetchedTasks);
@@ -48,7 +48,7 @@ const Home = () => {
 
     const handleAddTask = async (newTask) => {
         try {
-            await axios.post("http://localhost:5000/tasks", newTask);
+            await axios.post("https://task-manager-web-server.vercel.app/tasks", newTask);
             await fetchTasks(); // Immediately fetch updated data from server
         } catch (error) {
             console.error("Error adding task:", error);
@@ -57,7 +57,7 @@ const Home = () => {
 
     const handleTaskUpdate = async (taskId, updatedData) => {
         try {
-            await axios.put(`http://localhost:5000/tasks/${taskId}`, updatedData);
+            await axios.put(`https://task-manager-web-server.vercel.app/tasks/${taskId}`, updatedData);
             await fetchTasks(); // Fetch latest data from server
         } catch (error) {
             console.error("Error updating task:", error);
@@ -68,7 +68,7 @@ const Home = () => {
         const confirmed = window.confirm("Are you sure you want to delete this task?");
         if (confirmed) {
             try {
-                await axios.delete(`http://localhost:5000/tasks/${taskId}`);
+                await axios.delete(`https://task-manager-web-server.vercel.app/tasks/${taskId}`);
                 await fetchTasks(); // Fetch latest tasks after deletion
             } catch (error) {
                 console.error("Error deleting task:", error);
@@ -87,7 +87,7 @@ const Home = () => {
 
         try {
             const movedTask = columns[sourceColumn][source.index];
-            await axios.put(`http://localhost:5000/tasks/${movedTask._id}`, { category: destColumn });
+            await axios.put(`https://task-manager-web-server.vercel.app/tasks/${movedTask._id}`, { category: destColumn });
             await fetchTasks(); // Fetch updated tasks
         } catch (error) {
             console.error("Error updating task category:", error);

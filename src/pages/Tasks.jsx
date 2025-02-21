@@ -13,7 +13,7 @@ const Tasks = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/tasks");
+        const response = await axios.get("https://task-manager-web-server.vercel.app/tasks");
         const fetchedTasks = response.data;
         setTasks(fetchedTasks);
         categorizeTasks(fetchedTasks);

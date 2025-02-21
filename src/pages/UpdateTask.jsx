@@ -34,7 +34,7 @@ const UpdateTask = ({ task, onClose, onUpdate }) => {
         }
 
         try {
-            const response = await axios.put(`http://localhost:5000/tasks/${task._id}`, formData);
+            const response = await axios.put(`https://task-manager-web-server.vercel.app/tasks/${task._id}`, formData);
             if (response.data.modifiedCount > 0) {
                 Swal.fire("Success", "Task updated successfully!", "success");
                 onUpdate(task._id, formData);  // Notify the parent to update the task in the UI
