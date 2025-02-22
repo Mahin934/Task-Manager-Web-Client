@@ -5,6 +5,7 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import UpdateTask from "./UpdateTask";  
 import AddTask from "./AddTask";  
 import { DarkModeContext } from "../providers/DarkModeProvider";
+import Swal from "sweetalert2"; // Import SweetAlert2
 
 const Home = () => {
     const [selectedCategory, setSelectedCategory] = useState("");
@@ -67,15 +68,35 @@ const Home = () => {
     };
 
     const handleDeleteClick = async (taskId) => {
-        const confirmed = window.confirm("Are you sure you want to delete this task?");
-        if (confirmed) {
-            try {
-                await axios.delete(`https://task-manager-web-server.vercel.app/tasks/${taskId}`);
-                await fetchTasks(); // Fetch latest tasks after deletion
-            } catch (error) {
-                console.error("Error deleting task:", error);
+        // SweetAlert2 confirmation dialog
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you really want to delete this task?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await axios.delete(`https://task-manager-web-server.vercel.app/tasks/${taskId}`);
+                    await fetchTasks(); // Fetch latest tasks after deletion
+                    Swal.fire(
+                        'Deleted!',
+                        'Your task has been deleted.',
+                        'success'
+                    );
+                } catch (error) {
+                    console.error("Error deleting task:", error);
+                    Swal.fire(
+                        'Error!',
+                        'There was an issue deleting the task.',
+                        'error'
+                    );
+                }
             }
-        }
+        });
     };
 
     const onDragEnd = async (result) => {
