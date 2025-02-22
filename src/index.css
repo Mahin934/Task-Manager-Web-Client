@@ -5,3 +5,12 @@
 
 @import "tailwindcss";
 @plugin "daisyui";
+
+html, body {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dark {
+    background-color: #121212;
+    color: #ffffff;
+}

@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { DarkModeContext } from "../providers/DarkModeProvider";
 
 const UpdateTask = ({ task, onClose, onUpdate }) => {
+    const { darkMode } = useContext(DarkModeContext);
+
     const [formData, setFormData] = useState({
         title: task.title,
         description: task.description,
@@ -37,7 +40,7 @@ const UpdateTask = ({ task, onClose, onUpdate }) => {
             const response = await axios.put(`https://task-manager-web-server.vercel.app/tasks/${task._id}`, formData);
             if (response.data.modifiedCount > 0) {
                 Swal.fire("Success", "Task updated successfully!", "success");
-                onUpdate(task._id, formData);  // Notify the parent to update the task in the UI
+                onUpdate(task._id, formData); // Notify the parent to update the task in the UI
                 onClose();
             }
         } catch (error) {
@@ -46,8 +49,8 @@ const UpdateTask = ({ task, onClose, onUpdate }) => {
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-            <div className="bg-white p-6 rounded-lg shadow-xl w-96">
+        <div className="fixed inset-0 flex items-center justify-center bg-opacity-50">
+            <div className={`p-6 rounded-lg shadow-xl w-96 ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
                 <h2 className="text-xl font-bold mb-4">Update Task</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <input
@@ -57,7 +60,7 @@ const UpdateTask = ({ task, onClose, onUpdate }) => {
                         onChange={handleChange}
                         maxLength={50}
                         placeholder="Title"
-                        className="w-full px-3 py-2 border rounded-md"
+                        className={`w-full px-3 py-2 border rounded-md ${darkMode ? 'bg-gray-700 text-white' : ''}`}
                         required
                     />
                     <textarea
@@ -66,12 +69,12 @@ const UpdateTask = ({ task, onClose, onUpdate }) => {
                         onChange={handleChange}
                         maxLength={200}
                         placeholder="Description"
-                        className="w-full px-3 py-2 border rounded-md"
+                        className={`w-full px-3 py-2 border rounded-md ${darkMode ? 'bg-gray-700 text-white' : ''}`}
                     ></textarea>
                     <input
                         type="text"
                         value={formData.category}
-                        className="w-full px-3 py-2 border rounded-md bg-gray-100"
+                        className={`w-full px-3 py-2 border rounded-md bg-gray-100 ${darkMode ? 'bg-gray-600 text-white' : ''}`}
                         readOnly
                     />
                     <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-md">

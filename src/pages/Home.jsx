@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { FiEdit, FiTrash } from "react-icons/fi";
 import axios from "axios";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import UpdateTask from "./UpdateTask";  
 import AddTask from "./AddTask";  
+import { DarkModeContext } from "../providers/DarkModeProvider";
 
 const Home = () => {
     const [selectedCategory, setSelectedCategory] = useState("");
+    const { darkMode } = useContext(DarkModeContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [tasks, setTasks] = useState([]);
@@ -95,9 +97,9 @@ const Home = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center p-6">
-            <div className="relative">
-                <button onClick={() => setIsAddTaskModalOpen(true)} className="px-6 py-3 bg-blue-600 text-white rounded-md shadow-lg">
+        <div className={`${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"} flex my-20 md:my-10 flex-col items-center justify-center p-6`}>
+            <div className="relative w-full sm:w-auto">
+                <button onClick={() => setIsAddTaskModalOpen(true)} className="px-6 py-3 bg-blue-600 text-white rounded-md shadow-lg w-full sm:w-auto">
                     Add New Task
                 </button>
             </div>
@@ -115,16 +117,16 @@ const Home = () => {
             )}
 
             <DragDropContext onDragEnd={onDragEnd}>
-                <div className="flex gap-4 justify-between mt-10">
+                <div className={`${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"} flex flex-wrap gap-7 justify-center mt-10`}>
                     {Object.keys(columns).map((columnKey) => (
                         <Droppable key={columnKey} droppableId={columnKey}>
                             {(provided) => (
-                                <div ref={provided.innerRef} {...provided.droppableProps} className="w-1/3 bg-gray-100 p-4 rounded-lg shadow-md">
+                                <div ref={provided.innerRef} {...provided.droppableProps} className={`${darkMode ? "bg-gray-700 text-white" : "bg-gray-100 text-black"} w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4 rounded-lg shadow-md`}>
                                     <h2 className="text-xl font-bold mb-4 text-center">{columnKey}</h2>
                                     {columns[columnKey].map((task, index) => (
                                         <Draggable key={task._id} draggableId={task._id} index={index}>
                                             {(provided) => (
-                                                <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className="bg-white p-3 mb-3 rounded-md shadow">
+                                                <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className={`${darkMode ? "bg-gray-600 text-white" : "bg-white text-black"} p-3 mb-3 rounded-md shadow`}>
                                                     <h3 className="font-bold text-blue-600">{task.title}</h3>
                                                     <p>{task.description}</p>
                                                     <small className="text-gray-500">{new Date(task.timestamp).toLocaleString()}</small>

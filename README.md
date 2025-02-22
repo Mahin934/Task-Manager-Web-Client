@@ -1,4 +1,4 @@
-  1. Short Description
+  1 Short Description
 
        A Task Management App built with React, Tailwind CSS, Express, and MongoDB. Users can select a task category (To-Do, In Progress, Done), fill in task details, and save them to the database. A modal form ensures structured input, and SweetAlert confirms successful submission.
 
