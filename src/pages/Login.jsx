@@ -31,7 +31,8 @@ const Login = () => {
                     position: "top-right",
                     autoClose: 2000,
                 });
-                navigate(location?.state || "/");
+                // Navigate to the previous page if available, or default to the home page
+                navigate(location?.state?.from || "/");
             })
             .catch((error) => {
                 toast.error(`Login failed: ${error.message}`, {
@@ -50,7 +51,8 @@ const Login = () => {
                     position: "top-right",
                     autoClose: 2000,
                 });
-                navigate(location?.state || "/");
+                // Navigate to the previous page if available, or default to the home page
+                navigate(location?.state?.from || "/");
             })
             .catch((error) => {
                 toast.error(`Google login failed: ${error.message}`, {

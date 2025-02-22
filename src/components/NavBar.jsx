@@ -5,8 +5,6 @@ import { AuthContext } from "../providers/AuthProvider";
 import Swal from "sweetalert2";
 import { DarkModeContext } from "../providers/DarkModeProvider";
 
-
-
 const NavBar = () => {
     const { user, logOut } = useContext(AuthContext);
     const { darkMode, setDarkMode } = useContext(DarkModeContext);
@@ -37,23 +35,6 @@ const NavBar = () => {
             });
     };
 
-    const links = (
-        <>
-            <li>
-                <NavLink
-                    to="/"
-                    onClick={() => setDropdownOpen(false)}
-                    className={({ isActive }) =>
-                        isActive
-                            ? "text-white bg-blue-700 px-4 py-2 rounded-full"
-                            : "hover:bg-gray-200 dark:hover:bg-gray-700 px-4 py-2 rounded-full transition"
-                    }
-                >
-                    Home
-                </NavLink>
-            </li>
-        </>
-    );
 
     return (
         <div className={`fixed top-0 left-0 bg-gradient-to-r from-blue-400 to-indigo-600 w-full z-50 ${darkMode ? "bg-gray-900 text-white" : "bg-white text-black"} shadow-md`}>
@@ -62,9 +43,6 @@ const NavBar = () => {
                     <a className="btn border-none text-white font-semibold md:text-2xl bg-gradient-to-r from-blue-300 via-sky-500 to-indigo-500 animate__hinge">
                         TaskNest
                     </a>
-                </div>
-                <div className="navbar-center hidden lg:flex">
-                    <ul className="menu menu-horizontal space-x-3 px-1">{links}</ul>
                 </div>
                 <div className="navbar-end flex gap-4">
                     {/* Dark Mode Toggle Button */}
